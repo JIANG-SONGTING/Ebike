@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. Conclusion and Future Work – CDE4301 IoT Battery Safety</title>
+  <link rel="icon" href="https://edic-nus.github.io/template/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/index.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/table-of-content.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/references.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/scroll-to-top.css">
+  <script src="https://edic-nus.github.io/template/scroll-to-top.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/team-member.css">
+  <script type="module" src="https://edic-nus.github.io/template/team-member.js"></script>
+  <script src="https://edic-nus.github.io/template/table-component.js"></script>
+  <script type="module" src="https://edic-nus.github.io/template/image-component.js"></script>
+  <style>
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th { background: #1F3864; color: white; }
+    tr:nth-child(even) td { background: #f5f5f5; }
+    .nav-buttons { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .back-link { margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+<div class="content">
+  <div class="back-link"><sl-button href="../" variant="default" size="small">&#8592; Back to Home</sl-button></div>
+
+  <h1>7. Conclusion and Future Work</h1>
+
+  <div id="conclusion">
+    <h2>7.1 Conclusion</h2>
+    <p>This project successfully designed and implemented a prototype IoT-based battery safety monitoring system for an electric motorcycle. Four out of five objectives were fully met through functional testing. Temperature alerts were confirmed at three different thresholds using hand warming and a hair dryer. ADC voltage measurement showed an average error of 1.0% against a multimeter. A sharp rotation of the MPU-6050 triggered a Large-angle rollover alert with GPS coordinates recorded. The alert processing speed was approximately 2 seconds from threshold exceedance to alert appearing in the app.</p>
+    <p>The contribution of this project is system integration. No existing commercial product or research prototype currently provides the same combination of battery temperature monitoring, voltage monitoring, motion data logging, GPS reporting, and 4G connectivity in one device designed for electric motorcycles. The GPS field test in Singapore's CBD also produced a reproducible finding that is relevant to any IoT system requiring reliable urban positioning. Single-constellation GPS is insufficient in dense high-rise urban environments, and multi-constellation GNSS is necessary.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="impact">
+    <h2>7.2 Impact and Potential</h2>
+    <p>The validated prototype provides the industry partner a functional foundation for further development towards a deployable product. The market gap identified in the literature review, namely an integrated safety module for electric motorcycles, remains unaddressed by any current commercial product. The system architecture is modular and can support additional sensors and fleet-scale deployment without fundamental redesign.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="future">
+    <h2>7.3 Future Work</h2>
+    <p>The most immediate next step is to test voltage monitoring against a real lithium-ion battery under charge and discharge conditions, to confirm that the circuit and firmware logic work correctly when the input voltage changes over time. The voltage measurement circuit will also need to be redesigned for the 400V target battery with appropriate high-voltage isolation before the system can be deployed on the actual vehicle. The breadboard prototype should be converted to a PCB with vibration resistance and waterproofing to make it suitable for motorcycle mounting. A hardware cutoff circuit using a relay or MOSFET should be added so the system can physically disconnect the battery in response to a detected fault, rather than relying on notification alone. Multiple DS18B20 sensors should be added to monitor temperature at different points on the battery pack, which is straightforward because the 1-Wire protocol supports daisy-chaining multiple sensors on the same pin. A current sensor should be added to enable overcurrent detection and state-of-charge estimation. The gyroscope threshold should be calibrated using real riding data from the target motorcycle to ensure the Large-angle rollover alert can distinguish genuine crash events from normal cornering and road vibration. Finally, the completed system should be integrated and validated on the target vehicle under controlled conditions before road or track use.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="references" class="references">
+    <h2>References</h2>
+    <ul>
+      <li>Abd Wahab, M. H. (2018). IoT-based battery monitoring system for electric vehicle. <em>International Journal of Engineering and Technology, 7</em>(4.31), 505&#8211;510. <a href="https://doi.org/10.14419/ijet.v7i4.31.25472" target="_blank">https://doi.org/10.14419/ijet.v7i4.31.25472</a></li>
+      <li>CHIGEE. (n.d.). AIO-6 motorcycle smart system. <a href="https://www.chigee.com" target="_blank">https://www.chigee.com</a></li>
+      <li>GeoRide. (n.d.). Smart motorcycle tracker with crash detection. <a href="https://georide.eu" target="_blank">https://georide.eu</a></li>
+      <li>Hsieh, M. K. H., Lai, M. C., Sim, H. S. N., Lim, X., Fok, S. F. D., Joethy, J., Kong, T. Y., &amp; Lim, G. J. S. (2021). Electric scooter battery detonation: A case series and review of literature. <em>Annals of Burns and Fire Disasters, 34</em>(3), 264&#8211;276. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8534310/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC8534310/</a></li>
+      <li>Krishna, G., Singh, R., Gehlot, A., Shaik, V. A., Twala, B., &amp; Priyadarshi, N. (2024). IoT-based real-time analysis of battery management system with long range communication and FLoRa. <em>Results in Engineering, 23</em>(4), 102770. <a href="https://doi.org/10.1016/j.rineng.2024.102770" target="_blank">https://doi.org/10.1016/j.rineng.2024.102770</a></li>
+      <li>Lu, H. L. (2021). The design of parameter test system for lithium battery of electric vehicle based on STM32 single-chip microcomputer. <em>Open Access Library Journal, 8</em>, e8265. <a href="https://doi.org/10.4236/oalib.1108265" target="_blank">https://doi.org/10.4236/oalib.1108265</a></li>
+      <li>Maxim Integrated. (2019). <em>DS18B20 programmable resolution 1-wire digital thermometer datasheet.</em> <a href="https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf" target="_blank">https://www.analog.com/media/en/technical-documentation/data-sheets/DS18B20.pdf</a></li>
+      <li>MOKOEnergy. (2024). Types of battery management system. <a href="https://mokoenergy.com/types-of-battery-management-system/" target="_blank">https://mokoenergy.com/types-of-battery-management-system/</a></li>
+      <li>Revolt Motors. (n.d.). What is a battery management system. <a href="https://www.revoltmotors.com/blog/what-is-battery-management-system" target="_blank">https://www.revoltmotors.com/blog/what-is-battery-management-system</a></li>
+      <li>STMicroelectronics. (2015). <em>STM32F103x8 STM32F103xB medium-density performance line ARM-based 32-bit MCU datasheet.</em> <a href="https://www.st.com/resource/en/datasheet/stm32f103c8.pdf" target="_blank">https://www.st.com/resource/en/datasheet/stm32f103c8.pdf</a></li>
+      <li>Teltonika. (2024). Advanced EV battery monitoring with OBD data reading devices. <a href="https://www.teltonika-gps.com/use-cases/emobility-management/advanced-ev-battery-monitoring-with-obd-data-reading-devices" target="_blank">https://www.teltonika-gps.com</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <sl-button href="../discussion/" variant="default">&#8592; 6. Discussion</sl-button>
+    
+  </div>
+  <sl-button class="scroll-to-top" variant="primary" size="medium" circle onclick="scrollToTop()">
+    <sl-icon name="arrow-up" label="Back to top"></sl-icon>
+  </sl-button>
+</div>
+</body>
+</html>

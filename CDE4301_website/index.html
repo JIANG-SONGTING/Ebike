@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Battery Safety Monitoring System – CDE4301 IoT Battery Safety</title>
+  <link rel="icon" href="https://edic-nus.github.io/template/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/index.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/table-of-content.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/references.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/scroll-to-top.css">
+  <script src="https://edic-nus.github.io/template/scroll-to-top.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/team-member.css">
+  <script type="module" src="https://edic-nus.github.io/template/team-member.js"></script>
+  <script src="https://edic-nus.github.io/template/table-component.js"></script>
+  <script type="module" src="https://edic-nus.github.io/template/image-component.js"></script>
+  <style>
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th { background: #1F3864; color: white; }
+    tr:nth-child(even) td { background: #f5f5f5; }
+    .nav-buttons { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .back-link { margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+<div class="content">
+  <h1>IoT-Based Battery Safety Monitoring System for Electric Motorcycle</h1>
+  <p><em>CDE4301 Innovation and Design Capstone &mdash; AY2024/2025</em></p>
+
+  <div class="team-member-wrapper">
+    <team-member name="Jiang Songting" department="[TBC: Department]" year="[TBC: Year]"></team-member>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="abstract">
+    <h2>Abstract</h2>
+    <p>This report presents the design and implementation of a prototype IoT-based battery safety monitoring system for a high-performance electric motorcycle developed by an industry partner. The company's existing hardware lacked battery safety monitoring. This project extends it by adding temperature monitoring using the DS18B20, voltage monitoring using an ADC resistor divider circuit, and motion data logging using the MPU6050 IMU. All sensor data is uploaded every second via the AIR780EX 4G module to the OneNET cloud platform and viewable on a mobile app. When any value exceeds a configured threshold, the platform sends an email alert. A local OLED display provides real-time on-device feedback. Four out of five objectives were fully met. The main contribution is system integration. No existing commercial product currently combines battery monitoring, motion data logging, GPS reporting, and 4G connectivity in one device designed for electric motorcycles.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div class="table-of-content">
+    <h2>Table of Contents</h2>
+    <sl-tree>
+      <sl-tree-item expanded>
+        <a href="./introduction/">1. Introduction</a>
+        <sl-tree-item slot="children"><a href="./introduction/#bg">1.1 Background and Motivation</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./introduction/#objectives">1.2 Project Objectives</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./introduction/#scope">1.3 Scope and Boundaries</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./introduction/#novelty">1.4 Novelty and Value Proposition</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./literature-review/">2. Literature Review</a>
+        <sl-tree-item slot="children"><a href="./literature-review/#safety">2.1 Battery Safety Risks</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./literature-review/#commercial">2.2 Existing Commercial Solutions</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./literature-review/#research">2.3 IoT-Based Battery Monitoring Research</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./literature-review/#gaps">2.4 Gaps in Existing Work</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./methodology/">3. System Design</a>
+        <sl-tree-item slot="children"><a href="./methodology/#overview">3.1 System Overview</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./methodology/#decisions">3.2 System-Level Design Decisions</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./methodology/#components">3.3 Hardware Component Selection</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./methodology/#prototype">3.4 Prototype Implementation</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./implementation/">4. Implementation</a>
+        <sl-tree-item slot="children"><a href="./implementation/#hardware">4.1 Hardware Connections</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./implementation/#firmware">4.2 Firmware</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./implementation/#challenges">4.3 Challenges and Solutions</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./testing/">5. Testing and Results</a>
+        <sl-tree-item slot="children"><a href="./testing/#overview">5.1 Test Overview</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#t1">5.2 T1: Temperature Monitoring</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#t2">5.3 T2: Voltage Monitoring</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#t3">5.4 T3: Motion and Impact Detection</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#t4t5">5.5 T4 &amp; T5: OLED and Cloud Logging</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#t6">5.6 T6: Alert Processing Speed</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./testing/#summary">5.7 Summary of Results</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./discussion/">6. Discussion</a>
+        <sl-tree-item slot="children"><a href="./discussion/#objectives">6.1 Achievement of Objectives</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./discussion/#performance">6.2 System Performance</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./discussion/#limitations">6.3 Limitations</a></sl-tree-item>
+      </sl-tree-item>
+      <sl-tree-item expanded>
+        <a href="./conclusion/">7. Conclusion and Future Work</a>
+        <sl-tree-item slot="children"><a href="./conclusion/#conclusion">7.1 Conclusion</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./conclusion/#impact">7.2 Impact and Potential</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./conclusion/#future">7.3 Future Work</a></sl-tree-item>
+        <sl-tree-item slot="children"><a href="./conclusion/#references">References</a></sl-tree-item>
+      </sl-tree-item>
+    </sl-tree>
+  </div>
+
+  <div class="nav-buttons" style="margin-top:2rem;">
+    <sl-button href="./introduction/" variant="primary">Start Reading &#8594;</sl-button>
+  </div>
+
+  <sl-button class="scroll-to-top" variant="primary" size="medium" circle onclick="scrollToTop()">
+    <sl-icon name="arrow-up" label="Back to top"></sl-icon>
+  </sl-button>
+</div>
+</body>
+</html>

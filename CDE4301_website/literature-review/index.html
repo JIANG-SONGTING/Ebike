@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2. Literature Review – CDE4301 IoT Battery Safety</title>
+  <link rel="icon" href="https://edic-nus.github.io/template/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/index.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/table-of-content.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/references.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/scroll-to-top.css">
+  <script src="https://edic-nus.github.io/template/scroll-to-top.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/team-member.css">
+  <script type="module" src="https://edic-nus.github.io/template/team-member.js"></script>
+  <script src="https://edic-nus.github.io/template/table-component.js"></script>
+  <script type="module" src="https://edic-nus.github.io/template/image-component.js"></script>
+  <style>
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th { background: #1F3864; color: white; }
+    tr:nth-child(even) td { background: #f5f5f5; }
+    .nav-buttons { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .back-link { margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+<div class="content">
+  <div class="back-link"><sl-button href="../" variant="default" size="small">&#8592; Back to Home</sl-button></div>
+
+  <h1>2. Literature Review</h1>
+
+  <div id="safety">
+    <h2>2.1 Battery Safety Risks in Electric Vehicles</h2>
+    <p>Lithium-ion batteries are prone to thermal runaway triggered by physical damage from impacts, overcharging, over-discharging, or extreme temperatures (Hsieh et al., 2021). In Singapore, PMD-related fire incidents increased from 9 in 2016 to 74 in 2018, with burn injury admissions rising 20 times between 2016 and 2020 (Hsieh et al., 2021). All recorded cases were caused by lithium-ion battery failure, with 90% occurring during unsupervised charging. The risk is especially serious for electric motorcycles because there is no protective body around the rider, which means a battery fire directly exposes the rider to harm. The battery pack also faces more vibration and high g-forces during track use than in a car.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="commercial">
+    <h2>2.2 Existing Commercial Solutions</h2>
+    <p>The commercial market has three main categories. GPS trackers such as Monimoto and SinoTrack offer real-time location tracking, geofencing, and basic voltage monitoring, but include no temperature monitoring or thermal event detection. Crash detection systems such as GeoRide and CHIGEE AIO-6 detect impacts and send GPS location alerts to emergency contacts (GeoRide, n.d.; CHIGEE, n.d.), but they do not monitor battery health at all. Traditional BMS solutions are integrated inside battery packs and focus on local cell balancing and protection (Revolt Motors, n.d.), without remote monitoring, GPS alerting, or crash detection. More advanced products like the Teltonika FMC003 offer 4G-connected battery monitoring including temperature, but require OBD-II ports that motorcycles do not have (Teltonika, 2024). No existing product combines all four safety dimensions in a motorcycle-specific form factor.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="research">
+    <h2>2.3 IoT-Based Battery Monitoring Research</h2>
+    <p>Research has demonstrated IoT-connected battery monitoring using low-cost microcontrollers, though none targets the electric motorcycle context. An STM32-based battery parameter detection system (Lu, 2021) validates STM32 as a capable platform for battery monitoring but does not include wireless communication or cloud connectivity, limiting its usefulness to physically accessible devices only. An IoT-based system using a GSM module for voltage and GPS data (Abd Wahab, 2018) demonstrates value in combining battery monitoring with location tracking, but GSM has limited bandwidth and is being phased out in many regions, making it unsuitable as a long-term platform. More recent work integrates IoT-enabled BMS with cloud platforms (Krishna et al., 2024) but uses WiFi. This is not a minor engineering limitation but a fundamental architectural mismatch with mobile vehicle use, because a motorcycle moving at road speed exits a typical WiFi coverage area within seconds of departure, rendering the monitoring system non-functional for almost all of its operating life. No existing research prototype combines battery monitoring, crash detection, GPS alerting, and 4G connectivity in a single system for electric motorcycles.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="gaps">
+    <h2>2.4 Gaps in Existing Work</h2>
+    <p>Four gaps were identified from the review above. First, no existing BMS or IoT monitoring system integrates crash detection alongside battery monitoring. Second, WiFi-based systems are architecturally incompatible with mobile road use, and no research prototype uses 4G for battery monitoring. Third, commercial IoT monitoring products require OBD-II ports, which are unavailable on motorcycles. Fourth, and most importantly, no integrated system currently exists that combines all four safety dimensions, namely battery monitoring, crash detection, GPS alerting, and 4G cloud connectivity, for electric motorcycles. This project addresses the fourth gap directly through system integration.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <sl-button href="../introduction/" variant="default">&#8592; 1. Introduction</sl-button>
+    <sl-button href="../methodology/" variant="primary">3. System Design &#8594;</sl-button>
+  </div>
+  <sl-button class="scroll-to-top" variant="primary" size="medium" circle onclick="scrollToTop()">
+    <sl-icon name="arrow-up" label="Back to top"></sl-icon>
+  </sl-button>
+</div>
+</body>
+</html>

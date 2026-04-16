@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4. Implementation – CDE4301 IoT Battery Safety</title>
+  <link rel="icon" href="https://edic-nus.github.io/template/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/index.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/table-of-content.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/references.css">
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/scroll-to-top.css">
+  <script src="https://edic-nus.github.io/template/scroll-to-top.js"></script>
+  <link rel="stylesheet" href="https://edic-nus.github.io/template/team-member.css">
+  <script type="module" src="https://edic-nus.github.io/template/team-member.js"></script>
+  <script src="https://edic-nus.github.io/template/table-component.js"></script>
+  <script type="module" src="https://edic-nus.github.io/template/image-component.js"></script>
+  <style>
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th { background: #1F3864; color: white; }
+    tr:nth-child(even) td { background: #f5f5f5; }
+    .nav-buttons { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .back-link { margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+<div class="content">
+  <div class="back-link"><sl-button href="../" variant="default" size="small">&#8592; Back to Home</sl-button></div>
+
+  <h1>4. Implementation</h1>
+
+  <div id="hardware">
+    <h2>4.1 Hardware Connections</h2>
+    <p>The DS18B20 connects to PA7 via the 1-Wire protocol with a 4.7 k&#8486; pull-up resistor, powered from 3.3V. The resistor divider connects to PA0, which is ADC channel 0 on the STM32. In the current prototype, the divider samples the supply rail from the USB power source, and firmware reconstructs the supply voltage from the raw ADC reading. With USB power, the system reads approximately 3.0V on the voltage channel.</p>
+    <p>The MPU-6050 and the OLED display HS96L03W2C03 share the I2C2 bus on PB10 for SCL and PB11 for SDA. Because the two devices use different addresses, 0x68 for the MPU-6050 and 0x3C for the OLED, they can share the same bus without conflict. The AIR780EX connects to UART1 on PA9 for TX and PA10 for RX, and is powered from the 5V supply rail.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="firmware">
+    <h2>4.2 Firmware</h2>
+    <p>The firmware runs on a continuous polling loop. In each cycle, the STM32 first reads the DS18B20 temperature sensor, the ADC voltage, and the MPU-6050 accelerometer and gyroscope data. It then updates the OLED display with the current temperature, voltage, and system status. Finally, it sends all sensor data to the OneNET platform via the AIR780EX at a rate of once per second. Each upload includes the temperature reading, the voltage reading, accelerometer values for all three axes, gyroscope values for all three axes, and the GPS coordinates.</p>
+    <p>On the OneNET platform, threshold rules are configured for each data stream. When the gyroscope reading exceeds the configured threshold of 500 degrees per second, the platform flags the event and the mobile app displays a Large-angle rollover message. The GPS coordinates uploaded at the same moment allow the vehicle location to be identified at the time of the event. Placing all threshold logic on the cloud platform rather than in the device firmware means thresholds can be adjusted without reflashing the device. This is practical for a startup partner who may need to tune alert parameters frequently during development. When any threshold is exceeded, the platform triggers an email alert to the registered user. SMS alerts are available on the enterprise tier as a future upgrade.</p>
+  </div>
+
+  <sl-divider></sl-divider>
+
+  <div id="challenges">
+    <h2>4.3 Challenges and Solutions</h2>
+    <p>Three implementation challenges were encountered and resolved during the build.</p>
+    <p>The first challenge was the I2C address conflict between the MPU-6050 and the OLED display, since both were intended to share the same I2C2 bus. The addresses of the two devices were checked before connecting them. The MPU-6050 uses 0x68 and the OLED uses 0x3C, so they could share the bus without conflict.</p>
+    <p>The second challenge was protecting the STM32 ADC input from overvoltage. The STM32 ADC is limited to 3.3V, and connecting a higher voltage directly to the ADC pin would damage the microcontroller. The 100 k&#8486; and 10 k&#8486; resistor divider ensures the ADC pin stays within safe limits for any input voltage within the expected range, with the firmware scaling factor set to match the divider ratio.</p>
+    <p>The third challenge was that the target vehicle's 400V battery pack cannot be safely connected to a breadboard circuit. The voltage monitoring circuit was therefore validated by sampling the USB supply rail through the resistor divider. This produces a stable reading of approximately 3.0V, which confirms that the ADC measurement circuit and the firmware threshold logic both function correctly.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <sl-button href="../methodology/" variant="default">&#8592; 3. System Design</sl-button>
+    <sl-button href="../testing/" variant="primary">5. Testing and Results &#8594;</sl-button>
+  </div>
+  <sl-button class="scroll-to-top" variant="primary" size="medium" circle onclick="scrollToTop()">
+    <sl-icon name="arrow-up" label="Back to top"></sl-icon>
+  </sl-button>
+</div>
+</body>
+</html>
